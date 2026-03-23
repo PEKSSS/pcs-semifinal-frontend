@@ -20,7 +20,7 @@ submit.addEventListener('click',()=>{
     let category=document.querySelector("#category").value;
     let formData={title,amount,category};
 
-    fetch("http://localhost:7000/api/item",{
+    fetch("https://pcs-semifinal.onrender.com/api/item",{
         method:'POST',
         body: JSON.stringify(formData),
         headers:{
@@ -41,7 +41,7 @@ window.addEventListener('load', ()=>{
 function getUsers(){
     let html=""
     //FETCH API
-    fetch('http://localhost:7000/api/item',{mode:'cors'})
+    fetch('https://pcs-semifinal.onrender.com/api/item',{mode:'cors'})
     .then(response=>{
         console.log(response);
         return response.json();
@@ -95,7 +95,7 @@ function deleteMember(id){
 
 function updateMember(id){
 
-    fetch(`http://localhost:7000/api/item/${id}`)
+    fetch(`https://pcs-semifinal.onrender.com/api/item/${id}`)
     .then(response => response.json())
     .then(data => {
         document.querySelector("#title").value = data[0].title;
@@ -115,7 +115,7 @@ update.addEventListener('click',()=>{
     let id=document.querySelector("#ID").value;
     let formData={title,amount,category,id};
 
-    fetch(`http://localhost:7000/api/item`,{
+    fetch(`https://pcs-semifinal.onrender.com/api/item`,{
         method:'PUT',
         body: JSON.stringify(formData),
         headers:{
