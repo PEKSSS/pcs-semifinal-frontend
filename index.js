@@ -1,16 +1,26 @@
-const content=document.querySelector("#content");
+const content=document.querySelector("#items-list");
 const submit=document.querySelector("#add");
 const update=document.querySelector("#update");
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}/${day}/${month} ${hours}:${minutes}:${seconds}`;
+}
+
 //POST API
 submit.addEventListener('click',()=>{
-    let fname=document.querySelector("#fname").value;
-    let lname=document.querySelector("#lname").value;
-    let email=document.querySelector("#email").value;
-    let gender=document.querySelector("#gender").value;
-    let formData={fname,lname,email,gender};
+    let title=document.querySelector("#title").value;
+    let amount=document.querySelector("#amount").value;
+    let category=document.querySelector("#category").value;
+    let formData={title,amount,category};
 
-    fetch("https://pcs-semifinal.onrender.com/api/item",{
+    fetch("http://localhost:7000/api/item",{
         method:'POST',
         body: JSON.stringify(formData),
         headers:{
@@ -31,7 +41,7 @@ window.addEventListener('load', ()=>{
 function getUsers(){
     let html=""
     //FETCH API
-    fetch('https://pcs-semifinal.onrender.com/api/item',{mode:'cors'})
+    fetch('http://localhost:7000/api/item',{mode:'cors'})
     .then(response=>{
         console.log(response);
         return response.json();
@@ -39,14 +49,19 @@ function getUsers(){
     .then(data=>{
         console.log(data);
         data.forEach(element=>{
-            html+=`<div id="li-container">
-            <li> ${element.first_name} <br> ${element.last_name} <br> ${element.email} <br> ${element.gender} <br> ${element.ip_address}
-            <div id="button-container">
-            <button class="deleteButton" onClick="deleteMember('${element.id}')">Delete</button>
-            <button class="updateButton" onClick="updateMember('${element.id}')">Update</button>
+            html+=`<li class="item-container">
+            <ul class="item-details">
+                <li><strong>ID:</strong> ${element.id}</li>
+                <li><strong>Title:</strong> ${element.title}</li>
+                <li><strong>Amount:</strong> ${element.amount}</li>
+                <li><strong>Category:</strong> ${element.category}</li>
+                <li><strong>Date:</strong> ${formatDate(element.date)}</li>
+            </ul>
+            <div class="button-container">
+                <button class="deleteButton" onClick="deleteMember('${element.id}')">Delete</button>
+                <button class="updateButton" onClick="updateMember('${element.id}')">Update</button>
             </div>
-            </li>
-            </div>`
+        </li>`
         })
 
         content.innerHTML=html;
@@ -60,7 +75,7 @@ function getUsers(){
 
 function deleteMember(id){
     if(confirm("Are you sure you want to delete this user?")){
-    fetch(`https://pcs-semifinal.onrender.com/api/item/`,{
+    fetch(`https://pcs-semifinal.onrender.com/api/item`,{
         method:'DELETE',
         body: JSON.stringify({id}),
         headers:{
@@ -80,14 +95,12 @@ function deleteMember(id){
 
 function updateMember(id){
 
-    fetch(`https://pcs-semifinal.onrender.com/api/item/${id}`)
+    fetch(`http://localhost:7000/api/item/${id}`)
     .then(response => response.json())
     .then(data => {
-        document.querySelector("#fname").value = data[0].first_name;
-        document.querySelector("#lname").value = data[0].last_name;
-        document.querySelector("#email").value = data[0].email;
-        document.querySelector("#gender").value = data[0].gender;
-        document.querySelector("#ip-address").value = data[0].ip_address;
+        document.querySelector("#title").value = data[0].title;
+        document.querySelector("#amount").value = data[0].amount;
+        document.querySelector("#category").value = data[0].category;
         document.querySelector("#ID").value = data[0].id;
     }).catch(error =>{
         console.error(error);
@@ -96,15 +109,13 @@ function updateMember(id){
 }
 
 update.addEventListener('click',()=>{
-    let fname=document.querySelector("#fname").value;
-    let lname=document.querySelector("#lname").value;
-    let email=document.querySelector("#email").value;
-    let gender=document.querySelector("#gender").value;
-    let ip_address=document.querySelector("#ip-address").value;
+    let title=document.querySelector("#title").value;
+    let amount=document.querySelector("#amount").value;
+    let category=document.querySelector("#category").value;
     let id=document.querySelector("#ID").value;
-    let formData={fname,lname,email,gender,ip_address,id};
+    let formData={title,amount,category,id};
 
-    fetch(`https://pcs-semifinal.onrender.com/api/item`,{
+    fetch(`http://localhost:7000/api/item`,{
         method:'PUT',
         body: JSON.stringify(formData),
         headers:{
