@@ -1,13 +1,232 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset and base styles */
+* {
     margin: 0;
     padding: 0;
-    background-color: hsl(0, 0%, 91%);
+    box-sizing: border-box;
 }
-#container{
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    padding: 20px;
+}
+
+#container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px;
+    position: relative;
+}
+
+#container::before {
+    content: "PERSONAL FINANCE TRACKER";
+    display: block;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Form styling */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input[type="hidden"] {
+    display: none;
+}
+
+/* Buttons */
+#buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+#add {
+    background: #28a745;
+    color: white;
+}
+
+#add:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+#update {
+    background: #007bff;
+    color: white;
+}
+
+#update:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Items container */
+#items-container {
+    margin-top: 30px;
+}
+
+#items-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+#items-list {
+    list-style: none;
+    padding: 0;
+}
+
+.item-container {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.item-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.item-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.item-details li {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 4px solid #667eea;
+    font-size: 14px;
+    color: #555;
+}
+
+.item-details li strong {
+    color: #333;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.deleteButton {
+    background: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.deleteButton:hover {
+    background: #c82333;
+}
+
+.updateButton {
+    background: #ffc107;
+    color: #212529;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.updateButton:hover {
+    background: #e0a800;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    #buttons {
+        flex-direction: column;
+    }
+
+    #li-container li {
+        gap: 8px;
+    }
+
+    .item-info {
+        grid-template-columns: 1fr;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
 }
